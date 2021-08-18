@@ -1,0 +1,62 @@
+body{
+    background-color: tomato;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: purple;
+    color: white;
+}
+
+header p{
+    padding-right: 20px;
+}
+
+button{
+    display: flex;
+    font-size: 50px;
+    flex-direction: column;
+}
+
+.button{
+    background-color: blue;
+    color: cornsilk;
+}
+
+#Start{
+    font-size: 50px;
+    color: thistle;
+    background-color: teal;
+    visibility: visible;
+    align-self: center;
+    order: -1;
+}
+
+#Quiz{
+    background-color: blue;
+    color: cornsilk;
+}
+
+#Highscore{
+    padding: 20px;
+}
+
+#Question{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 50px;
+    justify-content: center;
+    align-items: center;
+    position: center;
+    font-size: 100px;
+    color: antiquewhite;
+}
+
+#Box{
+    visibility: hidden;
+    font-size: 50px;
+}
+
