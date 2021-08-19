@@ -10,9 +10,45 @@ var Button3 = document.querySelector("#Button-3")
 var Button4 = document.querySelector("#Button-4")
 var CaseEl = document.querySelector("#Box")
 
+var Quiz = [{
+    QuizEl: "1",
+    Button1: "A",
+    Button2: "B",
+    Button3: "C",
+    Button4: "D",
+    correct: "A"
+},{
+    QuizEl: "2",
+    Button1: "A",
+    Button2: "B",
+    Button3: "C",
+    Button4: "D",
+    correct: "B"
+},{
+    QuizEl: "3",
+    Button1: "A",
+    Button2: "B",
+    Button3: "C",
+    Button4: "D",
+    correct: "D"
+},{
+    QuizEl: "4",
+    Button1: "A",
+    Button2: "B",
+    Button3: "C",
+    Button4: "D",
+    correct: "A"
+},{
+    QuizEl: "5",
+    Button1: "A",
+    Button2: "B",
+    Button3: "C",
+    Button4: "D",
+    correct: "C"
+}];
+
 var timeLeft = 60
-var correctness = "incorrect"
-var Quest = 1
+var Quest = 0
 var score = 0
 
 function ButtonDisplay(){
@@ -34,10 +70,10 @@ function Countdown(){
             timeLeft = 0
             TimerEl.textContent = timeLeft
             StatusEl.textContent = "Good Game!"
+            StatusEl.setAttribute = ("style", "color: cornsilk")
             clearInterval(timeInterval)
             HideButton()
             HideQuiz()
-            Quest = 1
         };
     }, 1000);
 };
@@ -47,52 +83,8 @@ StartEl.addEventListener("click", function(){
     Countdown();
     ButtonDisplay();
     ShowQuiz();
-    Game();
+    firstQuest();
 })
-
-ButtonEl.addEventListener("click", function() {
-    Game();
-})
-
-function Question1(){
-    QuizEl.textContent = "1."
-    Button1.textContent = "A."
-    Button2.textContent = "B."
-    Button3.textContent = "C."
-    Button4.textContent = "D."
-}
-
-function Question2(){
-    QuizEl.textContent = "2."
-    Button1.textContent = "A."
-    Button2.textContent = "B."
-    Button3.textContent = "C."
-    Button4.textContent = "D."
-}
-
-function Question3(){
-    QuizEl.textContent = "3."
-    Button1.textContent = "A."
-    Button2.textContent = "B."
-    Button3.textContent = "C."
-    Button4.textContent = "D."
-}
-
-function Question4(){
-    QuizEl.textContent = "4."
-    Button1.textContent = "A."
-    Button2.textContent = "B."
-    Button3.textContent = "C."
-    Button4.textContent = "D."
-}
-
-function Question5(){
-    QuizEl.textContent = "5."
-    Button1.textContent = "A."
-    Button2.textContent = "B."
-    Button3.textContent = "C."
-    Button4.textContent = "D."
-}
 
 function ShowQuiz(){
     document.getElementById("Box").style.visibility = "visible"
@@ -111,32 +103,34 @@ function SaveScore(){
     localStorage.getItem("TimeScore", timeLeft)
 }
 
-function Game(){
-    if (Quest === 1) {
-        Question1();
-        Quest++;
-    }
-    else if (Quest === 2) {
-        Question2();
-        Quest++;
-    }
-    else if (Quest === 3) {
-        Question3();
-        Quest++;
-    }
-    else if (Quest === 4) {
-        Question4();
-        Quest++;
-    }
-    else if (Quest === 5) {
-        Question5();
-        Quest++;
-    }
-    else{
-        SaveScore();
-        Quest = 1;
-        HideQuiz();
-        GetScore();
-        timeLeft = 0;
-    }
+function firstQuest() {
+    var Solve = Quiz[Quest];
+    QuizEl.textContent = Solve.QuizEl;
+    Button1.textContent = Solve.Button1;
+    Button2.textContent = Solve.Button2;
+    Button3.textContent = Solve.Button3;
+    Button4.textContent = Solve.Button4;
 }
+
+for (var i = 0; i < ButtonEl.length; i++) {
+    ButtonEl[i].addEventListener("click", function userAnswer(event) {
+      event.stopPropagation();
+      if (event.currentTarget.innerText === Quiz[Quest].correct){
+      StatusEl.textContent = "Correct + 5 sec";
+      StatusEl.setAttribute("style", "color: Green");
+      TimeLeft = timeLeft + 5;
+      console.log("correct");
+    } else {
+      StatusEl.textContent = "Incorrect - 5 sec";
+      StatusEl.setAttribute("style", "color: red");
+      TimeLeft = TimeLeft - 5;
+      console.log("Incorrect minus 5 seconds");
+    }
+    console.log(Quest)
+    Quest++;
+    
+    if (Quest < 5) {
+    firstQuest()   
+    }
+  });
+  }
