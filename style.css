@@ -14,18 +14,17 @@ header p{
     padding-right: 20px;
 }
 
-button{
-    display: flex;
-    font-size: 50px;
-    flex-direction: column;
-}
-
 .button{
+    display: flex;
+    flex-direction: column;
+    font-size: 50px;
     background-color: blue;
     color: cornsilk;
 }
 
 #Start{
+    display: flex;
+    flex-direction: column;
     font-size: 50px;
     color: thistle;
     background-color: teal;

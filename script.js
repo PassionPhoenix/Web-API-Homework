@@ -1,3 +1,4 @@
+var HighEl = document.querySelector("#Highscore")
 var TimerEl = document.querySelector("#timer")
 var BoxEl = document.querySelector("#Question")
 var StartEl = document.querySelector("#Start")
@@ -53,6 +54,7 @@ var highscores = []
 var timeLeft = 60
 var Quest = 0
 var score = ""
+var PlayWin = ""
 
 function ButtonDisplay(){
     document.getElementById("Start").style.visibility = "hidden"
@@ -71,14 +73,17 @@ function Countdown(){
         }
         else if(timeLeft > 0 && Quest === 5){
             SaveScore()
-            Highscore()
+            HideButton()
             clearInterval(timeInterval)
+            StatusEl.setAttribute = ("style", "color: cornsilk")
+            StatusEl.textContent = "Good Game!"
+            Quest = 0
         }
         else{
             timeLeft = 0
             TimerEl.textContent = timeLeft
-            StatusEl.textContent = "Good Game!"
             StatusEl.setAttribute = ("style", "color: cornsilk")
+            StatusEl.textContent = "You Lose!"
             clearInterval(timeInterval)
             HideButton()
             HideQuiz()
@@ -88,7 +93,6 @@ function Countdown(){
 
 StartEl.addEventListener("click", function(){
     StatusEl.textContent = ""
-    Quest = 0
     document.getElementById("Score").style.visibility = "hidden"
     Countdown();
     ButtonDisplay();
@@ -104,19 +108,38 @@ function HideQuiz(){
     document.getElementById("Box").style.visibility = "hidden"
 }
 
-function Highscore(){
-    GetScore();
-    var Initials = prompt("Input Initials\n Max 4");
-    ScoreEl.textContent = Initials + " - " + score
-    document.getElementById("Score").style.visibility = "visible"
+function DisplayScores(){
+
 }
 
-function GetScore(){
-    score = localStorage.getItem("timeLeft")
+HighEl.addEventListener("click", function(){
+    ViewWins()
+    Highscore()
+})
+
+function Highscore(){
+    document.getElementById("Score").style.visibility = "visible"
+    HideQuiz()
+    HideButton()
+    ScoreEl.textContent = PlayWin
 }
 
 function SaveScore(){
-    localStorage.getItem("timeLeft", timeLeft)
+    localStorage.setItem("timeLeft", timeLeft)
+    score = localStorage.getItem("timeLeft")
+    var Initials = prompt("Input Initials\n Max 4 Letters");
+    
+    if (Initials === ""){
+        window.alert("Initials cannot be blank!")
+        SaveScore()
+    }
+    else{
+    var Input = Initials.substr(0, 4)
+    PlayWin = (score + " - " + Input)
+    }
+
+    highscores.push(PlayWin)
+    StoreWins()
 }
 
 function firstQuest() {
@@ -137,17 +160,17 @@ function firstQuest() {
 
 Button1.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
-    StatusEl.textContent = "Correct + 5 sec";
+    StatusEl.textContent = "Correct + 15 sec";
     StatusEl.setAttribute("style", "color: Green");
-    timeLeft = timeLeft + 5;
+    timeLeft = timeLeft + 15;
     console.log("correct");
     Quest++
     firstQuest()   
   } else {
-    StatusEl.textContent = "Incorrect - 5 sec";
+    StatusEl.textContent = "Incorrect - 15 sec";
     StatusEl.setAttribute("style", "color: red");
-    timeLeft = timeLeft - 5;
-    console.log("Incorrect minus 5 seconds");
+    timeLeft = timeLeft - 15;
+    console.log("Incorrect minus 15 seconds");
     Quest++
     firstQuest()   
     }
@@ -155,17 +178,17 @@ Button1.addEventListener("click", function (event) {
 
 Button2.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
-    StatusEl.textContent = "Correct + 5 sec";
+    StatusEl.textContent = "Correct + 15 sec";
     StatusEl.setAttribute("style", "color: Green");
-    timeLeft = timeLeft + 5;
+    timeLeft = timeLeft + 15;
     console.log("correct");
     Quest++
     firstQuest()   
   } else {
-    StatusEl.textContent = "Incorrect - 5 sec";
+    StatusEl.textContent = "Incorrect - 15 sec";
     StatusEl.setAttribute("style", "color: red");
-    timeLeft = timeLeft - 5;
-    console.log("Incorrect minus 5 seconds");
+    timeLeft = timeLeft - 15;
+    console.log("Incorrect minus 15 seconds");
     Quest++
     firstQuest()   
     }
@@ -173,17 +196,17 @@ Button2.addEventListener("click", function (event) {
 
 Button3.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
-    StatusEl.textContent = "Correct + 5 sec";
+    StatusEl.textContent = "Correct + 15 sec";
     StatusEl.setAttribute("style", "color: Green");
-    timeLeft = timeLeft + 5;
+    timeLeft = timeLeft + 15;
     console.log("correct");
     Quest++
     firstQuest()   
   } else {
-    StatusEl.textContent = "Incorrect - 5 sec";
+    StatusEl.textContent = "Incorrect - 15 sec";
     StatusEl.setAttribute("style", "color: red");
-    timeLeft = timeLeft - 5;
-    console.log("Incorrect minus 5 seconds");
+    timeLeft = timeLeft - 15;
+    console.log("Incorrect minus 15 seconds");
     Quest++
     firstQuest()   
     }
@@ -191,18 +214,46 @@ Button3.addEventListener("click", function (event) {
 
 Button4.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
-    StatusEl.textContent = "Correct + 5 sec";
+    StatusEl.textContent = "Correct + 15 sec";
     StatusEl.setAttribute("style", "color: Green");
-    timeLeft = timeLeft + 5;
+    timeLeft = timeLeft + 15;
     console.log("correct");
     Quest++
     firstQuest()   
   } else {
-    StatusEl.textContent = "Incorrect - 5 sec";
+    StatusEl.textContent = "Incorrect - 15 sec";
     StatusEl.setAttribute("style", "color: red");
-    timeLeft = timeLeft - 5;
-    console.log("Incorrect minus 5 seconds");
+    timeLeft = timeLeft - 15;
+    console.log("Incorrect minus 15 seconds");
     Quest++
     firstQuest()   
     }
 })
+
+function init(){
+    var StoredWinners = JSON.parse(localStorage.getItem("highscores"))
+
+    if (StoredWinners !== null) {
+        highscores = StoredWinners
+    }
+
+    ViewWins()
+}
+
+function StoreWins(){
+    localStorage.setItem("highscores", JSON.stringify(highscores))
+}
+
+function ViewWins(){
+    ScoreEl.innerHTML = "";
+
+    for (var i = 0; i < highscores.length; i++) {
+        var highscore = highscores[i];
+    
+        var li = document.createElement("li");
+        li.textContent = highscore;
+        li.setAttribute("data-index", i);
+
+        ScoreEl.appendChild(li);
+    }
+}
