@@ -29,9 +29,9 @@ var Quiz = [{
     correct: "All of the Above"
 },{
     QuizEl: "The condition in an if/else statement is enclosed within ____?",
-    Button1: "Quotes",
-    Button2: "Curly Brackets",
-    Button3: "Parenthesis",
+    Button1: "Parenthesis",
+    Button2: "Quotes",
+    Button3: "Curly Brackets",
     Button4: "Square Brackets",
     correct: "Parenthesis"
 },{
@@ -44,13 +44,13 @@ var Quiz = [{
 },{
     QuizEl: "A Very useful tool during development and debugging for printing content to the dubugger is ____.",
     Button1: "Javascript",
-    Button2: "B",
-    Button3: "C",
-    Button4: "D",
-    correct: "C"
+    Button2: "For loops",
+    Button3: "80's Music",
+    Button4: "Console.log",
+    correct: "Console.log"
 }];
 
-var highscores = []
+var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 var timeLeft = 60
 var Quest = 0
 var score = ""
@@ -75,12 +75,15 @@ function Countdown(){
             SaveScore()
             HideButton()
             clearInterval(timeInterval)
+            CaseEl.style.order = "+1"
+            StatusEl.style.color = "white"
             StatusEl.textContent = "Good Game!"
             Quest = 0
         }
         else{
             timeLeft = 0
             TimerEl.textContent = timeLeft
+            StatusEl.style.color = "black";
             StatusEl.textContent = "You Lose!"
             clearInterval(timeInterval)
             HideButton()
@@ -91,6 +94,7 @@ function Countdown(){
 
 StartEl.addEventListener("click", function(){
     StatusEl.textContent = ""
+    CaseEl.style.order = "-1"
     document.getElementById("Score").style.visibility = "hidden"
     Countdown();
     ButtonDisplay();
@@ -115,7 +119,6 @@ function Highscore(){
     document.getElementById("Score").style.visibility = "visible"
     HideQuiz()
     HideButton()
-    ScoreEl.textContent = PlayWin
 }
 
 function SaveScore(){
@@ -154,6 +157,7 @@ function firstQuest() {
 Button1.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
     StatusEl.textContent = "Correct + 15 sec";
+    StatusEl.style.color = "green";
     timeLeft = timeLeft + 15;
     console.log("correct");
     Quest++
@@ -161,6 +165,7 @@ Button1.addEventListener("click", function (event) {
   } else {
     StatusEl.textContent = "Incorrect - 15 sec";
     timeLeft = timeLeft - 15;
+    StatusEl.style.color = "red";
     console.log("Incorrect minus 15 seconds");
     Quest++
     firstQuest()   
@@ -169,50 +174,56 @@ Button1.addEventListener("click", function (event) {
 
 Button2.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
-    StatusEl.textContent = "Correct + 15 sec";
-    timeLeft = timeLeft + 15;
-    console.log("correct");
-    Quest++
-    firstQuest()   
-  } else {
-    StatusEl.textContent = "Incorrect - 15 sec";
-    timeLeft = timeLeft - 15;
-    console.log("Incorrect minus 15 seconds");
-    Quest++
-    firstQuest()   
-    }
+        StatusEl.textContent = "Correct + 15 sec";
+        StatusEl.style.color = "green";
+        timeLeft = timeLeft + 15;
+        console.log("correct");
+        Quest++
+        firstQuest()   
+      } else {
+        StatusEl.textContent = "Incorrect - 15 sec";
+        timeLeft = timeLeft - 15;
+        StatusEl.style.color = "red";
+        console.log("Incorrect minus 15 seconds");
+        Quest++
+        firstQuest()   
+        }
 })
 
 Button3.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
-    StatusEl.textContent = "Correct + 15 sec";
-    timeLeft = timeLeft + 15;
-    console.log("correct");
-    Quest++
-    firstQuest()   
-  } else {
-    StatusEl.textContent = "Incorrect - 15 sec";
-    timeLeft = timeLeft - 15;
-    console.log("Incorrect minus 15 seconds");
-    Quest++
-    firstQuest()   
-    }
+        StatusEl.textContent = "Correct + 15 sec";
+        StatusEl.style.color = "green";
+        timeLeft = timeLeft + 15;
+        console.log("correct");
+        Quest++
+        firstQuest()   
+      } else {
+        StatusEl.textContent = "Incorrect - 15 sec";
+        timeLeft = timeLeft - 15;
+        StatusEl.style.color = "red";
+        console.log("Incorrect minus 15 seconds");
+        Quest++
+        firstQuest()   
+        }
 })
 
 Button4.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
-    StatusEl.textContent = "Correct + 15 sec";
-    timeLeft = timeLeft + 15;
-    console.log("correct");
-    Quest++
-    firstQuest()   
-  } else {
-    StatusEl.textContent = "Incorrect - 15 sec";
-    timeLeft = timeLeft - 15;
-    console.log("Incorrect minus 15 seconds");
-    Quest++
-    firstQuest()   
-    }
+        StatusEl.textContent = "Correct + 15 sec";
+        StatusEl.style.color = "green";
+        timeLeft = timeLeft + 15;
+        console.log("correct");
+        Quest++
+        firstQuest()   
+      } else {
+        StatusEl.textContent = "Incorrect - 15 sec";
+        timeLeft = timeLeft - 15;
+        StatusEl.style.color = "red";
+        console.log("Incorrect minus 15 seconds");
+        Quest++
+        firstQuest()   
+        }
 })
 
 function init(){
@@ -228,7 +239,7 @@ function init(){
 function ViewWins(){
     ScoreEl.innerHTML = "";
 
-    for (var i = highscores.length; i < highscores.length; i++) {
+    for (var i = 0; i < highscores.length; i++) {
         var highscore = highscores[i];
     
         var li = document.createElement("li");

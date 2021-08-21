@@ -30,7 +30,7 @@ header p{
     background-color: teal;
     visibility: visible;
     align-self: center;
-    order: -1;
+    order: -2;
 }
 
 #Score{
@@ -62,5 +62,6 @@ header p{
 #Box{
     visibility: hidden;
     font-size: 50px;
+    order: -1;
 }
 
