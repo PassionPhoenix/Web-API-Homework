@@ -35,7 +35,7 @@ var Quiz = [{
     Button4: "Square Brackets",
     correct: "Parenthesis"
 },{
-    QuizEl: "String Values must be enclose withing ____ when being assigned to variables.",
+    QuizEl: "String Values must be enclose within ____ when being assigned to variables.",
     Button1: "Commas",
     Button2: "Curly Brackets",
     Button3: "Quotes",
