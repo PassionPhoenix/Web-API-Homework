@@ -14,36 +14,36 @@ var CaseEl = document.querySelector("#Box")
 
 
 var Quiz = [{
-    QuizEl: "1",
-    Button1: "A",
-    Button2: "B",
-    Button3: "C",
-    Button4: "D",
-    correct: "A"
+    QuizEl: "Commonly used data types DO NOT include",
+    Button1: "Strings",
+    Button2: "Booleans",
+    Button3: "Alerts",
+    Button4: "Numbers",
+    correct: "Alerts"
 },{
-    QuizEl: "2",
-    Button1: "A",
-    Button2: "B",
-    Button3: "C",
-    Button4: "D",
-    correct: "B"
+    QuizEl: "Arrays in Javascript can be used to store ____?",
+    Button1: "Numbers and Strings",
+    Button2: "other arrays",
+    Button3: "Booleans",
+    Button4: "All of the Above",
+    correct: "All of the Above"
 },{
-    QuizEl: "3",
-    Button1: "A",
-    Button2: "B",
-    Button3: "C",
-    Button4: "D",
-    correct: "D"
+    QuizEl: "The condition in an if/else statement is enclosed within ____?",
+    Button1: "Quotes",
+    Button2: "Curly Brackets",
+    Button3: "Parenthesis",
+    Button4: "Square Brackets",
+    correct: "Parenthesis"
 },{
-    QuizEl: "4",
-    Button1: "A",
-    Button2: "B",
-    Button3: "C",
-    Button4: "D",
-    correct: "A"
+    QuizEl: "String Values must be enclose withing ____ when being assigned to variables.",
+    Button1: "Commas",
+    Button2: "Curly Brackets",
+    Button3: "Quotes",
+    Button4: "Parenthesis",
+    correct: "Quotes"
 },{
-    QuizEl: "5",
-    Button1: "A",
+    QuizEl: "A Very useful tool during development and debugging for printing content to the dubugger is ____.",
+    Button1: "Javascript",
     Button2: "B",
     Button3: "C",
     Button4: "D",
@@ -75,14 +75,12 @@ function Countdown(){
             SaveScore()
             HideButton()
             clearInterval(timeInterval)
-            StatusEl.setAttribute = ("style", "color: cornsilk")
             StatusEl.textContent = "Good Game!"
             Quest = 0
         }
         else{
             timeLeft = 0
             TimerEl.textContent = timeLeft
-            StatusEl.setAttribute = ("style", "color: cornsilk")
             StatusEl.textContent = "You Lose!"
             clearInterval(timeInterval)
             HideButton()
@@ -106,10 +104,6 @@ function ShowQuiz(){
 
 function HideQuiz(){
     document.getElementById("Box").style.visibility = "hidden"
-}
-
-function DisplayScores(){
-
 }
 
 HighEl.addEventListener("click", function(){
@@ -139,7 +133,7 @@ function SaveScore(){
     }
 
     highscores.push(PlayWin)
-    StoreWins()
+    localStorage.setItem("highscores", JSON.stringify(highscores))
 }
 
 function firstQuest() {
@@ -154,21 +148,18 @@ function firstQuest() {
     else{
         HideQuiz()
         StatusEl.textContent = "Good Game!"
-        StatusEl.setAttribute = ("style", "color: cornsilk")
     }
 }
 
 Button1.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
     StatusEl.textContent = "Correct + 15 sec";
-    StatusEl.setAttribute("style", "color: Green");
     timeLeft = timeLeft + 15;
     console.log("correct");
     Quest++
     firstQuest()   
   } else {
     StatusEl.textContent = "Incorrect - 15 sec";
-    StatusEl.setAttribute("style", "color: red");
     timeLeft = timeLeft - 15;
     console.log("Incorrect minus 15 seconds");
     Quest++
@@ -179,14 +170,12 @@ Button1.addEventListener("click", function (event) {
 Button2.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
     StatusEl.textContent = "Correct + 15 sec";
-    StatusEl.setAttribute("style", "color: Green");
     timeLeft = timeLeft + 15;
     console.log("correct");
     Quest++
     firstQuest()   
   } else {
     StatusEl.textContent = "Incorrect - 15 sec";
-    StatusEl.setAttribute("style", "color: red");
     timeLeft = timeLeft - 15;
     console.log("Incorrect minus 15 seconds");
     Quest++
@@ -197,14 +186,12 @@ Button2.addEventListener("click", function (event) {
 Button3.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
     StatusEl.textContent = "Correct + 15 sec";
-    StatusEl.setAttribute("style", "color: Green");
     timeLeft = timeLeft + 15;
     console.log("correct");
     Quest++
     firstQuest()   
   } else {
     StatusEl.textContent = "Incorrect - 15 sec";
-    StatusEl.setAttribute("style", "color: red");
     timeLeft = timeLeft - 15;
     console.log("Incorrect minus 15 seconds");
     Quest++
@@ -215,14 +202,12 @@ Button3.addEventListener("click", function (event) {
 Button4.addEventListener("click", function (event) {
     if (event.currentTarget.innerText === Quiz[Quest].correct){
     StatusEl.textContent = "Correct + 15 sec";
-    StatusEl.setAttribute("style", "color: Green");
     timeLeft = timeLeft + 15;
     console.log("correct");
     Quest++
     firstQuest()   
   } else {
     StatusEl.textContent = "Incorrect - 15 sec";
-    StatusEl.setAttribute("style", "color: red");
     timeLeft = timeLeft - 15;
     console.log("Incorrect minus 15 seconds");
     Quest++
@@ -240,14 +225,10 @@ function init(){
     ViewWins()
 }
 
-function StoreWins(){
-    localStorage.setItem("highscores", JSON.stringify(highscores))
-}
-
 function ViewWins(){
     ScoreEl.innerHTML = "";
 
-    for (var i = 0; i < highscores.length; i++) {
+    for (var i = highscores.length; i < highscores.length; i++) {
         var highscore = highscores[i];
     
         var li = document.createElement("li");
